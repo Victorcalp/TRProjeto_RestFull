@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TRProjeto_RestFull.Repository
 {
-    public interface IGeneric<T> where T : BaseEntity
+    public interface IRepository<T> where T : BaseEntity
     {
         T Create(T item);
         T Update(T item);

@@ -5,7 +5,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using TRProjeto_RestFull.Business;
+using TRProjeto_RestFull.Business.Implementation;
 using TRProjeto_RestFull.Model.Context;
+using TRProjeto_RestFull.Repository;
+using TRProjeto_RestFull.Repository.Generic;
 
 namespace TRProjeto_RestFull
 {
@@ -23,6 +27,9 @@ namespace TRProjeto_RestFull
         {
 
             services.AddControllers();
+
+            services.AddScoped<IClienteBusiness, ClienteBusinessImplementation>();
+            services.AddScoped(typeof(IRepository<>), typeof(IClienteBusiness<>));
 
             var connection = Configuration["MySQLConnection:MySQLConnectionString"];
             services.AddDbContext<MYSQLContext>(options => options.UseMySql(connection, ServerVersion.Parse("8.0.31 - mysql")));

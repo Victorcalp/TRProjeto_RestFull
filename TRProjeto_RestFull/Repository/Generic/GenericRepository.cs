@@ -6,12 +6,12 @@ using TRProjeto_RestFull.Model.Context;
 
 namespace TRProjeto_RestFull.Repository.Generic
 {
-    public class GenericRepository<T> : IGeneric<T> where T : BaseEntity
+    public class IClienteBusiness<T> : IRepository<T> where T : BaseEntity
     {
         private readonly MYSQLContext _context;
         private DbSet<T> dbSet;
 
-        public GenericRepository(MYSQLContext context)
+        public IClienteBusiness(MYSQLContext context)
         {
             _context = context;
             dbSet = _context.Set<T>();

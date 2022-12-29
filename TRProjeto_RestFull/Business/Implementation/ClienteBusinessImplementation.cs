@@ -2,33 +2,34 @@
 using TRProjeto_RestFull.Data.Converter.Implementation;
 using TRProjeto_RestFull.Data.VO;
 using TRProjeto_RestFull.Model;
+using TRProjeto_RestFull.Repository;
 using TRProjeto_RestFull.Repository.Generic;
 
 namespace TRProjeto_RestFull.Business.Implementation
 {
     public class ClienteBusinessImplementation : IClienteBusiness
     {
-        private readonly GenericRepository<Cliente> _repository;
-        private readonly ClienteConverter cliente;
+        private readonly IRepository<Cliente> _repository;
+        private readonly ClienteConverter _cliente;
 
-        public ClienteBusinessImplementation(GenericRepository<Cliente> repository, ClienteConverter cliente)
+        public ClienteBusinessImplementation(IRepository<Cliente> repository)
         {
             _repository = repository;
-            this.cliente = cliente;
+            _cliente = new ClienteConverter();
         }
 
         public ClienteVO Create(ClienteVO item)
         {
-            var obj = cliente.Parse(item);
+            var obj = _cliente.Parse(item);
             obj = _repository.Create(obj);
-            return cliente.Parse(obj);
+            return _cliente.Parse(obj);
         }
 
         public ClienteVO Update(ClienteVO item)
         {
-            var obj = cliente.Parse(item);
+            var obj = _cliente.Parse(item);
             obj = _repository.Update(obj);
-            return cliente.Parse(obj);
+            return _cliente.Parse(obj);
         }
 
         public void Delete(long id)
@@ -38,12 +39,12 @@ namespace TRProjeto_RestFull.Business.Implementation
 
         public List<ClienteVO> FiendAll()
         {
-            return cliente.Parse(_repository.FiendAll());
+            return _cliente.Parse(_repository.FiendAll());
         }
 
         public ClienteVO FiendById(long id)
         {
-            return cliente.Parse(_repository.FiendById(id));
+            return _cliente.Parse(_repository.FiendById(id));
         }
     }
 }
